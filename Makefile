@@ -1,21 +1,10 @@
-.PHONY: dev deps compile-app compile run
+.PHONY: dev deps
 
-dev:
+dev: deps
 	iex -S mix phx.server
 
-run-test: 
-	mix phx.server
-
 deps:
-	mix do deps.get --only prod
-	mix compile
+	mix do deps.get
 
-compile-app:
-	mix assets.deploy
-	mix phx.gen.release
-	mix release
-
-compile: deps compile-app
-
-run: 
-	_build/prod/rel/lambcast/bin/lambcast start
+setup:
+	mix setup
