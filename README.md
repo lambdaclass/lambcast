@@ -8,6 +8,12 @@
   ⚠️ This repository is currently a WIP 🔧
 </div>
 
+# Requirements
+
+- Elixir 1.16.1
+- Mix 1.16.1
+- Docker(optional)
+
 # Development Guide
 
 A PostgreSQL database is needed, using Docker and using this setup for the developing stage:
