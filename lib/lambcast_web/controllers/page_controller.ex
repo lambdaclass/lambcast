@@ -1,12 +1,17 @@
 defmodule LambcastWeb.PageController do
   use LambcastWeb, :controller
-  use Tesla
-  Tesla.Builder.plug(Tesla.Middleware.BaseUrl, "https://hub.farcaster.standardcrypto.vc:2281/v1")
-  Tesla.Builder.plug(Tesla.Middleware.JSON)
+  alias Farcaster.Rpc
 
   def home(conn, _params) do
-    {:ok, data} = Tesla.get("https://hub.farcaster.standardcrypto.vc:2281/v1/castsByFid?fid=2")
-    # render(conn, :home, layout: false)
-    text(conn, "#{data.body}")
+    user =
+      Rpc.get_request("userNameProofByName?name=vitalik.eth")
+
+    messages = Rpc.get_request("castsByFid?fid=#{user["fid"]}" <> "&reverse=1")
+    # IO.puts(messages)
+
+    conn
+    |> assign(:user, user)
+    |> assign(:messages, messages["messages"])
+    |> render(:home, layout: false)
   end
 end
