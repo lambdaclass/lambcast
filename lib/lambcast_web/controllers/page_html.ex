@@ -14,15 +14,25 @@ defmodule LambcastWeb.PageHTML do
         <tr>
           <th>Message</th>
           <th>Timestamp</th>
-          <th>Parent Fid</th>
+          <th>Links</th>
         </tr>
       </thead>
       <tbody id="messages">
         <%= for msg <- @messages do %>
           <tr>
-            <td class="border"><%= msg["data"]["castAddBody"]["text"] %></td>
-            <td class="border"><%= msg["data"]["timestamp"] %></td>
-            <td class="border"><%= msg["data"]["castAddBody"]["parentCastId"]["fid"] %></td>
+            <%= if !msg["data"]["castAddBody"]["parentCastId"]["fid"] do %>
+              <td class="border"><%= msg["data"]["castAddBody"]["text"] %></td>
+              <td class="border"><%= msg["data"]["timestamp"] %></td>
+              <td class="border">
+                <div>
+                  <%= if msg["data"]["castAddBody"]["embeds"] do %>
+                    <%= for embed <- msg["data"]["castAddBody"]["embeds"] do %>
+                      <.link href={embed["url"]}>Link</.link>
+                    <% end %>
+                  <% end %>
+                </div>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
