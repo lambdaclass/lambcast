@@ -12,6 +12,6 @@ defmodule LambcastWeb.PageController do
     conn
     |> assign(:user, user)
     |> assign(:messages, messages["messages"])
-    |> render(:home, layout: false)
+    |> render(:home)
   end
 end
