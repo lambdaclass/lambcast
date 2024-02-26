@@ -14,7 +14,11 @@
     <%= for msg <- @messages do %>
       <tr>
         <%= if !msg["data"]["castAddBody"]["parentCastId"]["fid"] do %>
-          <td class="border"><%= msg["data"]["castAddBody"]["text"] %></td>
+          <td class="border">
+          <div>
+            <%= msg["data"]["castAddBody"]["text"] %>
+          </div>
+          </td>
           <td class="border"><%= msg["data"]["timestamp"] %></td>
           <td class="border">
             <div>

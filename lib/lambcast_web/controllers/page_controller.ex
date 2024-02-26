@@ -7,7 +7,7 @@ defmodule LambcastWeb.PageController do
       Rpc.get_request("userNameProofByName?name=vitalik.eth")
 
     messages = Rpc.get_request("castsByFid?fid=#{user["fid"]}" <> "&reverse=1")
-    # IO.puts(messages)
+    IO.puts(messages["data"]["castAddBody"]["mentions"])
 
     conn
     |> assign(:user, user)
