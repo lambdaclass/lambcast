@@ -1,9 +1,6 @@
 defmodule LambcastWeb.LambcastComponents do
   use Phoenix.Component
 
-  alias Phoenix.LiveView.JS
-  import LambcastWeb.Gettext
-
   @doc """
   Renders a button.
 
@@ -109,7 +106,7 @@ defmodule LambcastWeb.LambcastComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-violet-300 text-violet-900 focus:ring-0"
+          class="rounded border-violet-300 text-violet-900 focus:ring-3"
           {@rest}
         />
         <%= @label %>
@@ -126,7 +123,7 @@ defmodule LambcastWeb.LambcastComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-2 block w-full rounded-md border border-violet-300 bg-white shadow-sm focus:border-violet-400 focus:ring-0 sm:text-sm"
+        class="mt-2 block w-full rounded-md border border-violet-300 bg-white shadow-sm focus:border-violet-400 focus:ring-3 sm:text-sm"
         multiple={@multiple}
         {@rest}
       >
@@ -146,10 +143,10 @@ defmodule LambcastWeb.LambcastComponents do
         id={@id}
         name={@name}
         class={[
-          "mt-2 block w-full rounded-lg text-violet-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "mt-2 block w-full rounded-lg text-violet-900 focus:ring-3 sm:text-sm sm:leading-6",
           "min-h-[6rem] phx-no-feedback:border-violet-300 phx-no-feedback:focus:border-violet-400",
-          @errors == [] && "border-violet-300 focus:border-violet-400",
-          @errors != [] && "border-rose-400 focus:border-rose-400"
+          @errors == [] && "border-4 border-violet-300 focus:border-violet-400",
+          @errors != [] && "border-4 border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
       ><%= Phoenix.HTML.Form.normalize_value("textarea", @value) %></textarea>
@@ -169,10 +166,10 @@ defmodule LambcastWeb.LambcastComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-violet-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "mt-2 w-full rounded-lg text-violet-900 focus:ring-5 sm:text-sm sm:leading-6",
           "phx-no-feedback:border-violet-300 phx-no-feedback:focus:border-violet-400",
-          @errors == [] && "border-violet-300 focus:border-violet-400",
-          @errors != [] && "border-rose-400 focus:border-rose-400"
+          @errors == [] && "border-4 border-violet-300 focus:border-violet-400",
+          @errors != [] && "border-4 border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
       />
@@ -195,9 +192,7 @@ defmodule LambcastWeb.LambcastComponents do
     """
   end
 
-  @doc """
-  Generates a generic error message.
-  """
+  # Generates a generic error message.
   slot :inner_block, required: true
 
   defp error(assigns) do
@@ -209,24 +204,7 @@ defmodule LambcastWeb.LambcastComponents do
     """
   end
 
-  @doc """
-  Renders a [Heroicon](https://heroicons.com).
-
-  Heroicons come in three styles – outline, solid, and mini.
-  By default, the outline style is used, but solid and mini may
-  be applied by using the `-solid` and `-mini` suffix.
-
-  You can customize the size and colors of the icons by setting
-  width, height, and background color classes.
-
-  Icons are extracted from the `deps/heroicons` directory and bundled within
-  your compiled app.css by the plugin in your `assets/tailwind.config.js`.
-
-  ## Examples
-
-      <.icon name="hero-x-mark-solid" />
-      <.icon name="hero-arrow-path" class="ml-1 w-3 h-3 animate-spin" />
-  """
+  # Renders a [Heroicon](https://heroicons.com) .
   attr :name, :string, required: true
   attr :class, :string, default: nil
 
@@ -236,9 +214,6 @@ defmodule LambcastWeb.LambcastComponents do
     """
   end
 
-  @doc """
-  Translates an error message using gettext.
-  """
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want
     # to translate as a static argument:
@@ -255,12 +230,5 @@ defmodule LambcastWeb.LambcastComponents do
     else
       Gettext.dgettext(LambcastWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  @doc """
-  Translates the errors for a field from a keyword list of errors.
-  """
-  defp translate_errors(errors, field) when is_list(errors) do
-    for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
 end
