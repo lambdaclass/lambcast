@@ -9,8 +9,8 @@ defmodule LambcastWeb.LambcastComponents do
 
   ## Examples
 
-      <.button>Send!</.button>
-      <.button phx-click="go" class="ml-2">Send!</.button>
+      <.lambcast_button>Send!</.button>
+      <.lambcast_button phx-click="go" class="ml-2">Send!</.button>
   """
   attr :type, :string, default: nil
   attr :class, :string, default: nil
@@ -56,8 +56,8 @@ defmodule LambcastWeb.LambcastComponents do
 
   ## Examples
 
-      <.input field={@form[:email]} type="email" />
-      <.input name="my-input" errors={["oh no!"]} />
+      <.lambcast_input field={@form[:email]} type="email" />
+      <.lambcast_input name="my-input" errors={["oh no!"]} />
   """
   attr :id, :any, default: nil
   attr :name, :any
@@ -90,7 +90,7 @@ defmodule LambcastWeb.LambcastComponents do
     |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
     |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
     |> assign_new(:value, fn -> field.value end)
-    |> input()
+    |> lambcast_input()
   end
 
   def lambcast_input(%{type: "checkbox"} = assigns) do
@@ -122,7 +122,7 @@ defmodule LambcastWeb.LambcastComponents do
   def lambcast_input(%{type: "select"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
+      <.lambcast_label for={@id}><%= @label %></.lambcast_label>
       <select
         id={@id}
         name={@name}
@@ -141,7 +141,7 @@ defmodule LambcastWeb.LambcastComponents do
   def lambcast_input(%{type: "textarea"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
+      <.lambcast_label for={@id}><%= @label %></.lambcast_label>
       <textarea
         id={@id}
         name={@name}
@@ -162,7 +162,7 @@ defmodule LambcastWeb.LambcastComponents do
   def lambcast_input(assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
+      <.lambcast_label for={@id}><%= @label %></.lambcast_label>
       <input
         type={@type}
         name={@name}
@@ -187,7 +187,7 @@ defmodule LambcastWeb.LambcastComponents do
   attr :for, :string, default: nil
   slot :inner_block, required: true
 
-  def label(assigns) do
+  def lambcast_label(assigns) do
     ~H"""
     <label for={@for} class="block text-sm font-semibold leading-6 text-violet-800">
       <%= render_slot(@inner_block) %>
@@ -200,7 +200,7 @@ defmodule LambcastWeb.LambcastComponents do
   """
   slot :inner_block, required: true
 
-  def error(assigns) do
+  defp error(assigns) do
     ~H"""
     <p class="mt-3 flex gap-3 text-sm leading-6 text-rose-600 phx-no-feedback:hidden">
       <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
@@ -210,9 +210,36 @@ defmodule LambcastWeb.LambcastComponents do
   end
 
   @doc """
+  Renders a [Heroicon](https://heroicons.com).
+
+  Heroicons come in three styles – outline, solid, and mini.
+  By default, the outline style is used, but solid and mini may
+  be applied by using the `-solid` and `-mini` suffix.
+
+  You can customize the size and colors of the icons by setting
+  width, height, and background color classes.
+
+  Icons are extracted from the `deps/heroicons` directory and bundled within
+  your compiled app.css by the plugin in your `assets/tailwind.config.js`.
+
+  ## Examples
+
+      <.icon name="hero-x-mark-solid" />
+      <.icon name="hero-arrow-path" class="ml-1 w-3 h-3 animate-spin" />
+  """
+  attr :name, :string, required: true
+  attr :class, :string, default: nil
+
+  defp icon(%{name: "hero-" <> _} = assigns) do
+    ~H"""
+    <span class={[@name, @class]} />
+    """
+  end
+
+  @doc """
   Translates an error message using gettext.
   """
-  def translate_error({msg, opts}) do
+  defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want
     # to translate as a static argument:
     #
@@ -233,7 +260,7 @@ defmodule LambcastWeb.LambcastComponents do
   @doc """
   Translates the errors for a field from a keyword list of errors.
   """
-  def translate_errors(errors, field) when is_list(errors) do
+  defp translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
 end
