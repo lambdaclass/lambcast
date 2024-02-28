@@ -3,8 +3,13 @@ defmodule Lambcast.Messages.Link do
   import Ecto.Changeset
 
   schema "links" do
-
-
+    field :timestamp, :utc_datetime
+    field :deleted_at, :utc_datetime
+    field :fid, :integer
+    field :target_fid, :integer
+    field :display_timestamp, :utc_datetime
+    field :type, :string
+    field :hash, :binary
     timestamps(type: :utc_datetime)
   end
 
