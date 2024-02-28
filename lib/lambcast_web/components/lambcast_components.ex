@@ -84,7 +84,7 @@ defmodule LambcastWeb.LambcastComponents do
 
   slot :inner_block
 
-  def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+  def lambcast_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
     |> assign(field: nil, id: assigns.id || field.id)
     |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
@@ -93,7 +93,7 @@ defmodule LambcastWeb.LambcastComponents do
     |> input()
   end
 
-  def input(%{type: "checkbox"} = assigns) do
+  def lambcast_input(%{type: "checkbox"} = assigns) do
     assigns =
       assign_new(assigns, :checked, fn ->
         Phoenix.HTML.Form.normalize_value("checkbox", assigns[:value])
@@ -101,7 +101,7 @@ defmodule LambcastWeb.LambcastComponents do
 
     ~H"""
     <div phx-feedback-for={@name}>
-      <label class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
+      <label class="flex items-center gap-4 text-sm leading-6 text-violet-600">
         <input type="hidden" name={@name} value="false" />
         <input
           type="checkbox"
@@ -109,7 +109,7 @@ defmodule LambcastWeb.LambcastComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
+          class="rounded border-violet-300 text-violet-900 focus:ring-0"
           {@rest}
         />
         <%= @label %>
@@ -119,14 +119,14 @@ defmodule LambcastWeb.LambcastComponents do
     """
   end
 
-  def input(%{type: "select"} = assigns) do
+  def lambcast_input(%{type: "select"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
       <select
         id={@id}
         name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+        class="mt-2 block w-full rounded-md border border-violet-300 bg-white shadow-sm focus:border-violet-400 focus:ring-0 sm:text-sm"
         multiple={@multiple}
         {@rest}
       >
@@ -138,7 +138,7 @@ defmodule LambcastWeb.LambcastComponents do
     """
   end
 
-  def input(%{type: "textarea"} = assigns) do
+  def lambcast_input(%{type: "textarea"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
@@ -146,9 +146,9 @@ defmodule LambcastWeb.LambcastComponents do
         id={@id}
         name={@name}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
-          "min-h-[6rem] phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
+          "mt-2 block w-full rounded-lg text-violet-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "min-h-[6rem] phx-no-feedback:border-violet-300 phx-no-feedback:focus:border-violet-400",
+          @errors == [] && "border-violet-300 focus:border-violet-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
@@ -159,7 +159,7 @@ defmodule LambcastWeb.LambcastComponents do
   end
 
   # All other inputs text, datetime-local, url, password, etc. are handled here...
-  def input(assigns) do
+  def lambcast_input(assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
@@ -169,9 +169,9 @@ defmodule LambcastWeb.LambcastComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
-          "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
+          "mt-2 block w-full rounded-lg text-violet-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "phx-no-feedback:border-violet-300 phx-no-feedback:focus:border-violet-400",
+          @errors == [] && "border-violet-300 focus:border-violet-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
@@ -189,7 +189,7 @@ defmodule LambcastWeb.LambcastComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label for={@for} class="block text-sm font-semibold leading-6 text-violet-800">
       <%= render_slot(@inner_block) %>
     </label>
     """
