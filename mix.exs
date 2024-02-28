@@ -56,7 +56,8 @@ defmodule Lambcast.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
-      {:tesla, "~> 1.8"}
+      {:tesla, "~> 1.8"},
+      {:ecto_json, "~> 0.1.0"}
     ]
   end
 
