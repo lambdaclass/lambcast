@@ -1,36 +1,34 @@
 <div>
-  <p class>User: <%= @user["name"] %></p>
-  <p class>FID: <%= @user["fid"] %></p>
+  <.form class="flex items-center max-w-sm mx-auto" :let={f} for={@data} method="GET" action={~p"/"}>
+    <div class="relative w-full">
+      <.input
+        type="text"
+        id="simple-search"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2.5 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        field={f[:search]}
+        placeholder="Search Username"
+        required
+      />
+    </div>
+    <button
+      type="submit"
+      class="p-2.5 ms-2 text-sm font-medium text-white bg-violet-700 rounded-lg border border-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"
+    >
+      <svg
+        class="w-4 h-4"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+        />
+      </svg>
+    </button>
+  </.form>
 </div>
-<table>
-  <thead>
-    <tr>
-      <th>Message</th>
-      <th>Timestamp</th>
-      <th>Links</th>
-    </tr>
-  </thead>
-  <tbody id="messages">
-    <%= for msg <- @messages do %>
-      <tr>
-        <%= if !msg["data"]["castAddBody"]["parentCastId"]["fid"] do %>
-          <td class="border">
-          <div>
-            <%= msg["data"]["castAddBody"]["text"] %>
-          </div>
-          </td>
-          <td class="border"><%= msg["data"]["timestamp"] %></td>
-          <td class="border">
-            <div>
-              <%= if msg["data"]["castAddBody"]["embeds"] do %>
-                <%= for embed <- msg["data"]["castAddBody"]["embeds"] do %>
-                  <.link href={embed["url"]}>Link</.link>
-                <% end %>
-              <% end %>
-            </div>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
