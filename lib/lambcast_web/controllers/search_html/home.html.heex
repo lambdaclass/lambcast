@@ -1,8 +1,7 @@
-<div class="grid place-items-center h-screen">
-  <.form :let={f} class="flex items-center max-w-sm mx-auto" for={@form} action={~p"/"}>
-    <div>
-      <h1>Search</h1>
-    </div>
+<div class="max-w-sm mx-auto mt-10">
+  <h1 class="text-center text-2xl font-bold mb-5">Search By UserName...</h1>
+  <div class="grid place-items-center">
+    <.form :let={f} class="flex items-center max-w-sm mx-auto" for={@form} action={~p"/"}>
       <.input
         type="text"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2.5 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -30,5 +29,6 @@
           />
         </svg>
       </button>
-  </.form>
+    </.form>
+  </div>
 </div>
