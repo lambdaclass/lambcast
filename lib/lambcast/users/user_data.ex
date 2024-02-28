@@ -3,8 +3,12 @@ defmodule Lambcast.Users.User_data do
   import Ecto.Changeset
 
   schema "user_data" do
-
-
+    field :timestamp, :utc_datetime
+    field :deleted_at, :utc_datetime
+    field :fid, :integer
+    field :type, :integer
+    field :hash, :binary
+    field :value, :string
     timestamps(type: :utc_datetime)
   end
 

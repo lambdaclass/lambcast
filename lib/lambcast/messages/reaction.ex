@@ -3,7 +3,14 @@ defmodule Lambcast.Messages.Reaction do
   import Ecto.Changeset
 
   schema "reactions" do
-
+    field :timestamp, :utc_datetime
+    field :deleted_at, :utc_datetime
+    field :fid, :integer
+    field :target_cast_fid, :integer
+    field :type, :integer
+    field :hash, :binary
+    field :target_cast_hash, :binary
+    field :target_url, :string
 
     timestamps(type: :utc_datetime)
   end

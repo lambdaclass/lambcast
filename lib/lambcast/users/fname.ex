@@ -3,8 +3,11 @@ defmodule Lambcast.Users.Fname do
   import Ecto.Changeset
 
   schema "fnames" do
-
-
+    field :registered_at, :utc_datetime
+    field :deleted_at, :utc_datetime
+    field :fid, :integer
+    field :type, :integer
+    field :username, :string
     timestamps(type: :utc_datetime)
   end
 
