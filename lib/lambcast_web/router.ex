@@ -17,7 +17,9 @@ defmodule LambcastWeb.Router do
   scope "/", LambcastWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", SearchController, :home
+    post "/", SearchController, :redirect_to_user
+    get "/:user", UserController, :index
   end
 
   # Other scopes may use custom stacks.

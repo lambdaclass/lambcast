@@ -20,11 +20,11 @@ A PostgreSQL database is needed, using Docker and using this setup for the devel
 
 ```sh
 docker run \
-        --name lambcast_db \
-        -e POSTGRES_USER=postgres \
-        -e POSTGRES_PASSWORD=postgres \
-        -p 5432:5432 \
-        -d postgres
+    --name lambcast_db \
+    -e POSTGRES_USER=postgres \
+    -e POSTGRES_PASSWORD=postgres \
+    -p 5432:5432 \
+    -d postgres
 ```
 
 Now, start Phoenix:
