@@ -1,4 +1,5 @@
 import Config
+import Dotenvy
 
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
@@ -16,9 +17,18 @@ import Config
 #
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
+source!([".env"])
+
 if System.get_env("PHX_SERVER") do
   config :lambcast, LambcastWeb.Endpoint, server: true
 end
+
+  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
+  config :lambcast, Lambcast.Repo,
+    # ssl: true,
+    url: "#{env!("DATABASE_SCHEMA", :string)}://#{env!("DATABASE_USER", :string)}:#{env!("DATABASE_PASSWORD", :string)}@#{env!("DATABASE_HOST", :string)}:#{env!("DATABASE_PORT", :string)}/#{env!("DATABASE_NAME", :string)}",
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+    socket_options: maybe_ipv6
 
 if config_env() == :prod do
   database_url =
@@ -28,13 +38,8 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
-  config :lambcast, Lambcast.Repo,
-    # ssl: true,
-    url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
+
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
