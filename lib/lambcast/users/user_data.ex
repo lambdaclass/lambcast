@@ -10,6 +10,8 @@ defmodule Lambcast.Users.User_data do
     field :hash, :binary
     field :value, :string
     timestamps(type: :utc_datetime)
+
+    belongs_to :user, Lambcast.Users.Fid
   end
 
   @doc false

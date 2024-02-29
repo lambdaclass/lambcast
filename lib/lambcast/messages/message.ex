@@ -16,6 +16,7 @@ defmodule Lambcast.Messages.Message do
     field :signer, :binary;
     field :raw, :binary;
     timestamps(type: :utc_datetime)
+
   end
 
   @doc false

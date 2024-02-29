@@ -15,8 +15,10 @@ defmodule Lambcast.Messages.Cast do
     field :text, :string;
     field :embeds, Ecto.JSON;
     field :mentions, Ecto.JSON;
-    field :mentions_positions, Ecto.JSON;
-    timestamps(type: :utc_datetime)
+    field :mentions_positions, Ecto.J
+
+    has_many :reactions, Lambcast.Messages.Reaction
+    belongs_to :user, Lambcast.Users.Fid
   end
 
   @doc false

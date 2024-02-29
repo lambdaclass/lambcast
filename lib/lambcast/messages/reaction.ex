@@ -12,6 +12,8 @@ defmodule Lambcast.Messages.Reaction do
     field :target_cast_hash, :binary
     field :target_url, :string
 
+    belongs_to :user, Lambcast.Users.User
+    belongs_to :cast, Lambcast.Messages.Cast
     timestamps(type: :utc_datetime)
   end
 
