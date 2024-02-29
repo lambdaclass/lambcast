@@ -42,34 +42,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Define how to cache deps. Restores existing cache if present.
-    - name: Cache deps
-      id: cache-deps
-      uses: actions/cache@v4
-      env:
-        cache-name: cache-elixir-deps
-      with:
-        path: deps
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
-
-    # Define how to cache the `_build` directory. After the first run,
-    # this speeds up tests runs a lot. This includes not re-compiling our
-    # project's downloaded deps every run.
-    - name: Cache compiled build
-      id: cache-build
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-compiled-build
-      with:
-        path: _build
-        key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-mix-${{ env.cache-name }}-
-          ${{ runner.os }}-mix-
-
-    # If unchanged, uses the cached version.
     - name: Install dependencies
       run: mix deps.get
 
