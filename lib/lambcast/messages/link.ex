@@ -11,6 +11,9 @@ defmodule Lambcast.Messages.Link do
     field :type, :string
     field :hash, :binary
     timestamps(type: :utc_datetime)
+
+    belongs_to :sender, Lambcast.Users.Fid
+    belongs_to :target, Lambcast.Users.Fid
   end
 
   @doc false

@@ -9,6 +9,8 @@ defmodule Lambcast.Users.Fname do
     field :type, :integer
     field :username, :string
     timestamps(type: :utc_datetime)
+
+    belongs_to :user, Lambcast.Users.Fid
   end
 
   @doc false
