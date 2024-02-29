@@ -1,8 +1,7 @@
 <div class="flex flex-row-reverse gap-8 justify-center">
   <header class="w-full max-w-sm">
-    <.lambcast_user bio={@bio} picture={@picture} name={@name} user={@user}></.lambcast_user>
+    <.lambcast_user bio={@bio} picture={@picture} name={@name} user={@user} />
   </header>
-
   <section class="w-full max-w-[600px] p-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <%= for message <- @messages do %>
       <.lambcast_msg>
