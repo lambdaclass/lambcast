@@ -23,19 +23,22 @@ defmodule LambcastWeb.LambcastComponents do
     ~H"""
     <ol class="relative border-s dark:border-violet-700">
       <li :for={msg <- @msg} class="mb-10 ms-4">
-        <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-        <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"><%= msg.timestamp %></time>
+        <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
+        </div>
+        <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+          <%= msg.timestamp %>
+        </time>
         <p class="max-w-xl text-base font-normal dark:text-white"><%= render_slot(msg) %></p>
 
         <div class="mt-3 dark:text-gray-400 flex flex-row gap-3">
           <button class="hover:text-red-500">
-            <.icon name="hero-heart"/>
+            <.icon name="hero-heart" />
           </button>
           <button class="hover:text-purple-500">
-            <.icon name="hero-arrow-path"/>
+            <.icon name="hero-arrow-path" />
           </button>
           <button class="hover:text-blue-500">
-            <.icon name="hero-chat-bubble-oval-left"/>
+            <.icon name="hero-chat-bubble-oval-left" />
           </button>
         </div>
       </li>
