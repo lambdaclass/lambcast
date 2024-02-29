@@ -4,8 +4,6 @@ defmodule Lambcast.Messages do
   """
 
   import Ecto.Query, warn: false
-  #alias Lambcast.Repo
-  #alias Lambcast.Messages.Cast
 
   @doc """
   Gets casts by fid.
@@ -29,5 +27,4 @@ defmodule Lambcast.Messages do
       %{timestamp: "Jan 15, 2024 13:47", text: "This is my third cast!"}
     ]
   end
-
 end
