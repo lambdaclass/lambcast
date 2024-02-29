@@ -6,48 +6,60 @@ defmodule LambcastWeb.LambcastComponents do
 
   ## Examples
 
-      <.lambcast_messages></.lambcast_messages>
-      <.lambcast_messages></.lambcast_messages>
+    <%= for message <- @messages do %>
+      <.lambcast_msg>
+        <:msg timestamp={message["data"]["timestamp"]} >
+          <%= message["data"]["castAddBody"]["text"] %>
+        </:msg>
+      </.lambcast_msg>
+    <% end %>
   """
 
-  slot :messages, required: true do
-    attr :title, :string, required: true
+  slot :msg, required: true do
+    attr :timestamp, :string, required: true
   end
 
-  def lambcast_messages(assigns) do
+  def lambcast_msg(assigns) do
     ~H"""
-      <ol class="relative border-s border-violet-200 dark:border-violet-700">
-          <li :for={message <- @messages} class="mb-10 ms-4">
-            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"><%= message["data"]["timestamp"] %></time>
-            <p class="max-w-xl text-base font-normal dark:text-white"><%= message["data"]["castAddBody"]["text"] %></p>
+    <ol class="relative border-s dark:border-violet-700">
+      <li :for={msg <- @msg} class="mb-10 ms-4">
+        <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+        <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"><%= msg.timestamp %></time>
+        <p class="max-w-xl text-base font-normal dark:text-white"><%= render_slot(msg) %></p>
 
-            <div class="mt-3 dark:text-white flex flex-row gap-3">
-              <button class="hover:text-red-500"><.icon name="hero-heart"></button>
-              <button class="hover:text-purple-500"><.icon name="hero-heart"></button>
-              <button class="hover:text-blue-500"><.icon name="hero-heart"></button>
-            </div>
-          </li>
-        <% end %>
-      </ol>
+        <div class="mt-3 dark:text-gray-400 flex flex-row gap-3">
+          <button class="hover:text-red-500">
+            <.icon name="hero-heart"/>
+          </button>
+          <button class="hover:text-purple-500">
+            <.icon name="hero-arrow-path"/>
+          </button>
+          <button class="hover:text-blue-500">
+            <.icon name="hero-chat-bubble-oval-left"/>
+          </button>
+        </div>
+      </li>
+    </ol>
     """
   end
 
   @doc """
-  Renders a button.
+  Renders a round button.
 
   ## Examples
 
-      <.lambcast_button>Send!</.button>
-      <.lambcast_button phx-click="go" class="ml-2">Send!</.button>
+    <.lambcast_button type="submit">
+      <.icon name="hero-magnifying-glass"/>
+    </.lambcast_button>
   """
   attr :type, :string, default: nil
+  attr :shape, :string, default: nil
   attr :class, :string, default: nil
   attr :rest, :global, include: ~w(disabled form name value)
 
   slot :inner_block, required: true
 
-  def lambcast_button(assigns) do
+  def lambcast_button(%{shape: "round"} = assigns) do
     ~H"""
     <button
       type={@type}
@@ -64,30 +76,32 @@ defmodule LambcastWeb.LambcastComponents do
     """
   end
 
+  def lambcast_button(assigns) do
+    ~H"""
+    <button
+      type={@type}
+      class={[
+        "phx-submit-loading:opacity-75 rounded-lg bg-violet-900 hover:bg-violet-700 py-3 px-4",
+        "text-medium font-semibold leading-6 text-white active:text-white/80",
+        "absolute end-2 bottom-2",
+        @class
+      ]}
+      {@rest}
+    >
+      <%= render_slot(@inner_block) %>
+    </button>
+    """
+  end
+
   @doc """
-  Renders an input with label and error messages.
+  Renders a round input with label and error messages.
 
   A `Phoenix.HTML.FormField` may be passed as argument,
   which is used to retrieve the input name, id, and values.
   Otherwise all attributes may be passed explicitly.
 
-  ## Types
-
-  This function accepts all HTML input types, considering that:
-
-    * You may also set `type="select"` to render a `<select>` tag
-
-    * `type="checkbox"` is used exclusively to render boolean values
-
-    * For live file uploads, see `Phoenix.Component.live_file_input/1`
-
-  See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
-  for more information.
-
   ## Examples
-
-      <.lambcast_input field={@form[:email]} type="email" />
-      <.lambcast_input name="my-input" errors={["oh no!"]} />
+    <.lambcast_roundinput type="text" class="px-28 py-3.5" field={f[:search]} placeholder="Search Username" required />
   """
   attr :id, :any, default: nil
   attr :name, :any
@@ -116,17 +130,17 @@ defmodule LambcastWeb.LambcastComponents do
 
   slot :inner_block
 
-  def lambcast_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+  def lambcast_round_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
     |> assign(field: nil, id: assigns.id || field.id)
     |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
     |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
     |> assign_new(:value, fn -> field.value end)
-    |> lambcast_input()
+    |> lambcast_round_input()
   end
 
   # All other inputs text, datetime-local, url, password, etc. are handled here...
-  def lambcast_input(assigns) do
+  def lambcast_round_input(assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
       <input
