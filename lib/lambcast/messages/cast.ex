@@ -2,6 +2,7 @@ defmodule Lambcast.Messages.Cast do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :string, autogenerate: false}
   schema "casts" do
     field :timestamp, :utc_datetime
     field :deleted_at, :utc_datetime
@@ -17,10 +18,10 @@ defmodule Lambcast.Messages.Cast do
     field :mentions, Ecto.JSON
     field :mentions_positions, Ecto.JSON
 
-    timestamps(type: :utc_datetime)
+    timestamps(type: :utc_datetime, inserted_at: :created_at)
 
     has_many :reactions, Lambcast.Messages.Reaction
-    belongs_to :user, Lambcast.Users.Fid
+    # belongs_to :fid, Lambcast.Users.Fid, foreign_key:
   end
 
   @doc false
