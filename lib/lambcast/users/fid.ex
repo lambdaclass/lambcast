@@ -4,7 +4,7 @@ defmodule Lambcast.Users.Fid do
 
   schema "fids" do
     field :fid, :integer
-    field :chain_event_id, :uuid
+    field :chain_event_id, :integer
     field :custody_address, :binary
     field :recovery_address, :binary
 
