@@ -10,9 +10,7 @@ defmodule Lambcast.UsersFixtures do
   def fname_fixture(attrs \\ %{}) do
     {:ok, fname} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Lambcast.Users.create_fname()
 
     fname
@@ -24,9 +22,7 @@ defmodule Lambcast.UsersFixtures do
   def user_data_fixture(attrs \\ %{}) do
     {:ok, user_data} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Lambcast.Users.create_user_data()
 
     user_data

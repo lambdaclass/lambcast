@@ -10,9 +10,7 @@ defmodule Lambcast.MessagesFixtures do
   def message_fixture(attrs \\ %{}) do
     {:ok, message} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Lambcast.Messages.create_message()
 
     message
@@ -24,9 +22,7 @@ defmodule Lambcast.MessagesFixtures do
   def cast_fixture(attrs \\ %{}) do
     {:ok, cast} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Lambcast.Messages.create_cast()
 
     cast
@@ -38,9 +34,7 @@ defmodule Lambcast.MessagesFixtures do
   def link_fixture(attrs \\ %{}) do
     {:ok, link} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Lambcast.Messages.create_link()
 
     link
@@ -52,9 +46,7 @@ defmodule Lambcast.MessagesFixtures do
   def reaction_fixture(attrs \\ %{}) do
     {:ok, reaction} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Lambcast.Messages.create_reaction()
 
     reaction
