@@ -2,6 +2,38 @@ defmodule LambcastWeb.LambcastComponents do
   use Phoenix.Component
 
   @doc """
+  Renders a messages block.
+
+  ## Examples
+
+      <.lambcast_messages></.lambcast_messages>
+      <.lambcast_messages></.lambcast_messages>
+  """
+
+  slot :messages, required: true do
+    attr :title, :string, required: true
+  end
+
+  def lambcast_messages(assigns) do
+    ~H"""
+      <ol class="relative border-s border-violet-200 dark:border-violet-700">
+          <li :for={message <- @messages} class="mb-10 ms-4">
+            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"><%= message["data"]["timestamp"] %></time>
+            <p class="max-w-xl text-base font-normal dark:text-white"><%= message["data"]["castAddBody"]["text"] %></p>
+
+            <div class="mt-3 dark:text-white flex flex-row gap-3">
+              <button class="hover:text-red-500"><.icon name="hero-heart"></button>
+              <button class="hover:text-purple-500"><.icon name="hero-heart"></button>
+              <button class="hover:text-blue-500"><.icon name="hero-heart"></button>
+            </div>
+          </li>
+        <% end %>
+      </ol>
+    """
+  end
+
+  @doc """
   Renders a button.
 
   ## Examples
