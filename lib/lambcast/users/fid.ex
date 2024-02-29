@@ -11,9 +11,9 @@ defmodule Lambcast.Users.Fid do
     field :registered_at, :utc_datetime
     timestamps(type: :utc_datetime)
 
-    has_many :casts, Lambcast.Messages.Cast
-    has_many :links, Lambcast.Messages.Link
-    has_many :reactions, Lambcast.Messages.Reaction
+    has_many :casts, Lambcast.Messages.Cast, foreign_key: :fid
+    has_many :links, Lambcast.Messages.Link, foreign_key: :fid
+    has_many :reactions, Lambcast.Messages.Reaction, foreign_key: :fid
   end
 
   @doc false
