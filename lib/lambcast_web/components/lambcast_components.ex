@@ -20,7 +20,7 @@ defmodule LambcastWeb.LambcastComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-full bg-violet-900 hover:bg-violet-700 py-2 px-3",
+        "phx-submit-loading:opacity-75 rounded-full bg-violet-900 hover:bg-violet-700 py-3 px-4",
         "text-medium font-semibold leading-6 text-white active:text-white/80",
         "absolute end-2 bottom-2",
         @class
@@ -105,6 +105,7 @@ defmodule LambcastWeb.LambcastComponents do
         class={[
           "flex rounded-full text-left text-violet-900 focus:ring-5",
           "phx-no-feedback:border-violet-300 phx-no-feedback:focus:border-violet-400",
+          "text-xl antialiased font-semibold",
           @class,
           @errors == [] && "border-4 border-violet-300 focus:border-violet-400",
           @errors != [] && "border-4 border-rose-400 focus:border-rose-400"

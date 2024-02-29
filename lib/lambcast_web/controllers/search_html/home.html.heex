@@ -2,7 +2,7 @@
   <h1 class="text-center text-2xl font-bold mb-5">Search By UserName...</h1>
   <.form :let={f} for={@form} action={~p"/"}>
     <div class="relative">
-      <.lambcast_input type="text" class="px-28 py-3" field={f[:search]} placeholder="Search Username" required />
+      <.lambcast_input type="text" class="px-28 py-3.5" field={f[:search]} placeholder="Search Username" required />
       <.lambcast_button type="submit"><.icon name="hero-magnifying-glass"/></.lambcast_button>
     </div>
   </.form>
