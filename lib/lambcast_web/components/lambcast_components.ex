@@ -20,9 +20,9 @@ defmodule LambcastWeb.LambcastComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-violet-900 hover:bg-violet-700 py-2 px-3",
+        "phx-submit-loading:opacity-75 rounded-full bg-violet-900 hover:bg-violet-700 py-2 px-3",
         "text-medium font-semibold leading-6 text-white active:text-white/80",
-        "absolute end-2.5 bottom-2.5",
+        "absolute end-2 bottom-2",
         @class
       ]}
       {@rest}
@@ -80,6 +80,8 @@ defmodule LambcastWeb.LambcastComponents do
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
                 multiple pattern placeholder readonly required rows size step)
 
+  attr :class, :string, default: nil
+
   slot :inner_block
 
   def lambcast_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
@@ -101,8 +103,9 @@ defmodule LambcastWeb.LambcastComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 w-full rounded-lg text-violet-900 focus:ring-5 sm:text-sm sm:leading-6",
+          "flex rounded-full text-left text-violet-900 focus:ring-5",
           "phx-no-feedback:border-violet-300 phx-no-feedback:focus:border-violet-400",
+          @class,
           @errors == [] && "border-4 border-violet-300 focus:border-violet-400",
           @errors != [] && "border-4 border-rose-400 focus:border-rose-400"
         ]}
