@@ -22,6 +22,7 @@ defmodule LambcastWeb.LambcastComponents do
       class={[
         "phx-submit-loading:opacity-75 rounded-lg bg-violet-900 hover:bg-violet-700 py-2 px-3",
         "text-medium font-semibold leading-6 text-white active:text-white/80",
+        "absolute end-2.5 bottom-2.5",
         @class
       ]}
       {@rest}
@@ -90,76 +91,10 @@ defmodule LambcastWeb.LambcastComponents do
     |> lambcast_input()
   end
 
-  def lambcast_input(%{type: "checkbox"} = assigns) do
-    assigns =
-      assign_new(assigns, :checked, fn ->
-        Phoenix.HTML.Form.normalize_value("checkbox", assigns[:value])
-      end)
-
-    ~H"""
-    <div phx-feedback-for={@name}>
-      <label class="flex items-center gap-4 text-sm leading-6 text-violet-600">
-        <input type="hidden" name={@name} value="false" />
-        <input
-          type="checkbox"
-          id={@id}
-          name={@name}
-          value="true"
-          checked={@checked}
-          class="rounded border-violet-300 text-violet-900 focus:ring-3"
-          {@rest}
-        />
-        <%= @label %>
-      </label>
-      <.error :for={msg <- @errors}><%= msg %></.error>
-    </div>
-    """
-  end
-
-  def lambcast_input(%{type: "select"} = assigns) do
-    ~H"""
-    <div phx-feedback-for={@name}>
-      <.lambcast_label for={@id}><%= @label %></.lambcast_label>
-      <select
-        id={@id}
-        name={@name}
-        class="mt-2 block w-full rounded-md border border-violet-300 bg-white shadow-sm focus:border-violet-400 focus:ring-3 sm:text-sm"
-        multiple={@multiple}
-        {@rest}
-      >
-        <option :if={@prompt} value=""><%= @prompt %></option>
-        <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
-      </select>
-      <.error :for={msg <- @errors}><%= msg %></.error>
-    </div>
-    """
-  end
-
-  def lambcast_input(%{type: "textarea"} = assigns) do
-    ~H"""
-    <div phx-feedback-for={@name}>
-      <.lambcast_label for={@id}><%= @label %></.lambcast_label>
-      <textarea
-        id={@id}
-        name={@name}
-        class={[
-          "mt-2 block w-full rounded-lg text-violet-900 focus:ring-3 sm:text-sm sm:leading-6",
-          "min-h-[6rem] phx-no-feedback:border-violet-300 phx-no-feedback:focus:border-violet-400",
-          @errors == [] && "border-4 border-violet-300 focus:border-violet-400",
-          @errors != [] && "border-4 border-rose-400 focus:border-rose-400"
-        ]}
-        {@rest}
-      ><%= Phoenix.HTML.Form.normalize_value("textarea", @value) %></textarea>
-      <.error :for={msg <- @errors}><%= msg %></.error>
-    </div>
-    """
-  end
-
   # All other inputs text, datetime-local, url, password, etc. are handled here...
   def lambcast_input(assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
-      <.lambcast_label for={@id}><%= @label %></.lambcast_label>
       <input
         type={@type}
         name={@name}
@@ -175,20 +110,6 @@ defmodule LambcastWeb.LambcastComponents do
       />
       <.error :for={msg <- @errors}><%= msg %></.error>
     </div>
-    """
-  end
-
-  @doc """
-  Renders a label.
-  """
-  attr :for, :string, default: nil
-  slot :inner_block, required: true
-
-  def lambcast_label(assigns) do
-    ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-violet-800">
-      <%= render_slot(@inner_block) %>
-    </label>
     """
   end
 
