@@ -5,11 +5,9 @@ defmodule Lambcast.Users.Fid do
   schema "fids" do
     field :fid, :integer
     field :chain_event_id, :uuid
-    field :custody_address, :binary 
+    field :custody_address, :binary
     field :recovery_address, :binary
 
-    field :created_at, :utc_datetime
-    field :updated_at, :utc_datetime
     field :registered_at, :utc_datetime
     timestamps(type: :utc_datetime)
   end
