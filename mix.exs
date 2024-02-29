@@ -58,6 +58,7 @@ defmodule Lambcast.MixProject do
       {:bandit, "~> 1.2"},
       {:tesla, "~> 1.8"},
       {:ecto_json, "~> 0.1.0"}
+      {:dotenvy, "~> 0.8.0"}
     ]
   end
 
