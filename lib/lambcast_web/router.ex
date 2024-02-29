@@ -19,8 +19,7 @@ defmodule LambcastWeb.Router do
 
     get "/", SearchController, :home
     post "/", SearchController, :redirect_to_user
-
-    get "/:username", UserController, :index
+    get "/:user", UserController, :index
   end
 
   # Other scopes may use custom stacks.
