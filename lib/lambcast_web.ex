@@ -86,6 +86,7 @@ defmodule LambcastWeb do
       # Core UI components and translation
       import LambcastWeb.CoreComponents
       import LambcastWeb.Gettext
+      import LambcastWeb.LambcastComponents
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
