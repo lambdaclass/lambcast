@@ -2,15 +2,15 @@ defmodule Lambcast.Users.Fname do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "fnames" do
-    field :registered_at, :utc_datetime
-    field :deleted_at, :utc_datetime
     field :fid, :integer
     field :type, :integer
     field :username, :string
-    timestamps(type: :utc_datetime)
 
-    belongs_to :user, Lambcast.Users.Fid
+    timestamps(type: :utc_datetime, inserted_at: :created_at)
+    field :registered_at, :utc_datetime
+    field :deleted_at, :utc_datetime
   end
 
   @doc false

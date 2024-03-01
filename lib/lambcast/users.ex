@@ -3,15 +3,34 @@ defmodule Lambcast.Users do
   The Users context.
   """
 
+  alias Lambcast.Repo
+
+  # alias Lambcast.Users.Fid
+  alias Lambcast.Users.Fname
+  alias Lambcast.Users.User_data
+
   import Ecto.Query, warn: false
 
+  def get_fid!(username) do
+    Repo.get_by!(Fname, username: username).fid
+  end
+
+  def get_user_data!(fid) do
+    Repo.all(
+      from user_data in User_data,
+        where: user_data.fid == ^fid
+    )
+  end
+
   def get_user!(username) do
+    fid = get_fid!(username)
+
+    data = get_user_data!(fid)
+
     %{
-      fid: 1234,
       username: username,
-      displayname: "displayname",
-      bio: "A very short biography",
-      picture: "https://i.imgur.com/YcP0tik.jpeg"
+      fid: fid,
+      data: data
     }
   end
 end
