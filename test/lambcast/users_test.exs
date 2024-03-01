@@ -10,8 +10,16 @@ defmodule Lambcast.UsersTest do
   end
 
   test "Get user" do
-    user = Users.get_user!("a")
+    user = Users.get_user!("vinayvasanji.eth")
 
-    IO.inspect(user)
+    assert user == %{
+             username: "vinayvasanji.eth",
+             fid: 1082,
+             preferred_username: "vinayvasanji",
+             biography:
+               "/candies prev web3 identity: everyname (acq), gitcoin passport, humanetics",
+             display_name: "Vinay Vasanji",
+             profile_picture: "https://i.imgur.com/7y4JRTk.jpg"
+           }
   end
 end
