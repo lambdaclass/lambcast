@@ -1,6 +1,7 @@
 defmodule LambcastWeb.UserController do
   use LambcastWeb, :controller
   alias Farcaster.Rpc
+  alias Lambcast.Messages
 
   @farcaster_epoch 1_609_459_200
 
