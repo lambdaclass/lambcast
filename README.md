@@ -12,11 +12,23 @@
 
 - Elixir 1.16.1
 - Mix 1.16.1
-- Docker(optional)
+- Docker (optional)
 
 # Development Guide
 
-A PostgreSQL database is needed, using Docker and using this setup for the developing stage:
+A PostgreSQL database is needed. This database will tipically be a replicator of the Hubs.
+
+The following env vars are required and can be placed in a .env file (you can use .env.example as a guide)
+
+```
+DATABASE_HOST
+DATABASE_PORT (default: 5432)
+DATABASE_NAME
+DATABASE_USER
+DATABASE_PASSWORD
+```
+
+You can start a database in Docker with the following command.
 
 ```sh
 docker run \
