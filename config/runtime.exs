@@ -24,14 +24,14 @@ if System.get_env("PHX_SERVER") do
 end
 
 config :lambcast, Lambcast.Repo,
-username: env!("DATABASE_USER", :string),
-password: env!("DATABASE_PASSWORD", :string),
-hostname: env!("DATABASE_HOST", :string),
-database: env!("DATABASE_NAME", :string),
-port: env!("DATABASE_PORT", :integer, 5432),
-pool_size: 10,
-stacktrace: true,
-show_sensitive_data_on_connection_error: true
+  username: env!("DATABASE_USER", :string),
+  password: env!("DATABASE_PASSWORD", :string),
+  hostname: env!("DATABASE_HOST", :string),
+  database: env!("DATABASE_NAME", :string),
+  port: env!("DATABASE_PORT", :integer, 5432),
+  pool_size: 10,
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true
 
 if config_env() == :prod do
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
