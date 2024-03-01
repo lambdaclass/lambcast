@@ -2,6 +2,7 @@ defmodule Lambcast.Users.Fid do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "fids" do
     field :fid, :integer
     field :chain_event_id, :integer
