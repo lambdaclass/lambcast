@@ -23,23 +23,24 @@ if System.get_env("PHX_SERVER") do
   config :lambcast, LambcastWeb.Endpoint, server: true
 end
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
-  config :lambcast, Lambcast.Repo,
-    # ssl: true,
-    url: "#{env!("DATABASE_SCHEMA", :string)}://#{env!("DATABASE_USER", :string)}:#{env!("DATABASE_PASSWORD", :string)}@#{env!("DATABASE_HOST", :string)}:#{env!("DATABASE_PORT", :string)}/#{env!("DATABASE_NAME", :string)}",
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
+config :lambcast, Lambcast.Repo,
+username: env!("DATABASE_USER", :string),
+password: env!("DATABASE_PASSWORD", :string),
+hostname: env!("DATABASE_HOST", :string),
+database: env!("DATABASE_NAME", :string),
+port: env!("DATABASE_PORT", :integer, 5432),
+pool_size: 10,
+stacktrace: true,
+show_sensitive_data_on_connection_error: true
 
 if config_env() == :prod do
-  database_url =
-    System.get_env("DATABASE_URL") ||
-      raise """
-      environment variable DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
-      """
+  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
-
-
+  config :lambcast, Lambcast.Repo,
+    ssl: true,
+    stacktrace: false,
+    show_sensitive_data_on_connection_error: false,
+    socket_options: maybe_ipv6
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
